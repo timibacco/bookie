@@ -3,6 +3,7 @@ package core.service.serviceImpl;
 import core.entity.Patron;
 import core.repository.PatronRepository;
 import core.service.PatronService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class PatronServiceImpl implements PatronService {
     }
 
     @Override
-    public Object getAllPatrons() {
-        return patronRepository.findAll();
+    public Object getAllPatrons(Pageable pageable) {
+        return patronRepository.findAll(pageable);
     }
 }

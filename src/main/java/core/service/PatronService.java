@@ -1,5 +1,7 @@
 package core.service;
 
+import org.springframework.data.domain.Pageable;
+
 public interface PatronService {
 
 
@@ -9,6 +11,6 @@ public interface PatronService {
 
     Object getPatron(Long patronId);
 
-    Object getAllPatrons(); //todo: make pageable
+    Object getAllPatrons(Pageable pageable); //todo: make pageable
 
 }
