@@ -5,10 +5,12 @@ import core.entity.Patron;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface patronRepo extends JpaRepository<Patron, Long> {
+import java.util.Optional;
 
-    Object findByEmail(String email);
+@Repository
+public interface PatronRepository extends JpaRepository<Patron, Long> {
+
+    Optional<Patron> findByEmail(String email);
 
     Object findByPatronId(Long patronId);
 
