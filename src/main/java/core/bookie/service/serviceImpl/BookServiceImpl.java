@@ -1,17 +1,15 @@
-package core.service.serviceImpl;
+package core.bookie.service.serviceImpl;
 
 
 import core.bookie.request.BookRequest;
-import core.entity.Book;
-import core.repository.BooksRepository;
-import core.service.BookService;
+import core.bookie.entity.Book;
+import core.bookie.repository.BooksRepository;
+import core.bookie.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -73,8 +71,22 @@ public class BookServiceImpl implements BookService {
 
     }
 
+
     @Override
     public void borrowBook(Long bookId, Long patronId) {
+
+
+         booksRepository.findById(bookId).ifPresent(
+                 bk -> {
+                    if (!bk.isAvailable()) {
+                        throw new IllegalStateException("Book is already borrowed!");
+                    }
+                    bk.setQuantity(bk.getQuantity() - 1);
+
+
+                    booksRepository.saveAndFlush(bk);
+                }
+        );
 
 
     }

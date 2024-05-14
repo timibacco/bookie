@@ -1,5 +1,6 @@
-package core.entity;
+package core.bookie.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Date;
 
 @Data
+@Entity
 @RequiredArgsConstructor
 @Table(name = "books")
 public class Book {
@@ -27,7 +29,12 @@ public class Book {
 
     private Integer edition;
 
-    private boolean available;
+    private long quantity;
+
+    @JsonProperty(value = "is_available")
+    public boolean isAvailable(){
+        return quantity > 1;
+    }
 
 
     public String toString() {
@@ -38,7 +45,7 @@ public class Book {
                 ", publicationDate=" + publicationDate +
                 ", ISBN='" + ISBN + '\'' +
                 ", edition=" + edition + "th"+ '\'' +
-                ", available=" + available +
+                ", available=" + isAvailable() +
                 '}';
     }
 

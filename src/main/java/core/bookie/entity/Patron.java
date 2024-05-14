@@ -1,4 +1,4 @@
-package core.entity;
+package core.bookie.entity;
 
 
 import jakarta.persistence.*;
@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@Entity
 @RequiredArgsConstructor
 @Table(name ="patrons")
 public class Patron implements UserDetails {

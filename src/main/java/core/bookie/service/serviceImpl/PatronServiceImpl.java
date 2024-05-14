@@ -1,19 +1,24 @@
-package core.service.serviceImpl;
+package core.bookie.service.serviceImpl;
 
 import core.bookie.request.PatronRequest;
-import core.entity.Patron;
-import core.repository.PatronRepository;
-import core.service.PatronService;
+import core.bookie.entity.Patron;
+import core.bookie.repository.PatronRepository;
+import core.bookie.service.PatronService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class PatronServiceImpl implements PatronService {
 
-
-    private PatronRepository patronRepository;
+    @Autowired
+    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
+    @Autowired
+    private final PatronRepository patronRepository;
 
 
     @Override
@@ -21,6 +26,7 @@ public class PatronServiceImpl implements PatronService {
 
          patronRepository.findByEmail(request.getEmail()).ifPresent(patron -> {
             throw new IllegalStateException("Patron with email already exists!");
+            //todo: define custom exceptions
 
         });
 
@@ -33,7 +39,11 @@ public class PatronServiceImpl implements PatronService {
 
         patron.setPhone(request.getPhone());
 
-        // todo: add password hashing
+        patron.setPassword(encoder
+                .encode(request.getPassword()));
+
+
+
         patronRepository.saveAndFlush(patron);
 
 
@@ -42,12 +52,16 @@ public class PatronServiceImpl implements PatronService {
     @Override
     public void deletePatron(Long patronId) {
 
+        patronRepository.deleteById(patronId);
+
     }
 
     @Override
     public Object getPatron(Long patronId) {
         return patronRepository.findByPatronId(patronId);
     }
+
+
 
     @Override
     public Object getAllPatrons(Pageable pageable) {

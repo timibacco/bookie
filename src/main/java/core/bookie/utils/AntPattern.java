@@ -4,9 +4,13 @@ public class AntPattern {
 
     public static final String[] UNSECURED_ENDPOINTS = {
 
-            "/books/**",
-            "/patrons/**"
-                                            };
+            "/api/books/**",
+            "/api/patrons/**",
+
+            "/swagger-ui/**",
+            "/v3/**"
+
+    };
 
     public static final String[] ADMIN_ENDPOINTS = {
 

@@ -1,7 +1,7 @@
-package core.repository;
+package core.bookie.repository;
 
 
-import core.entity.Book;
+import core.bookie.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

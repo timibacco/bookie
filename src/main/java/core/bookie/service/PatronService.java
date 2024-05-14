@@ -1,4 +1,4 @@
-package core.service;
+package core.bookie.service;
 
 import core.bookie.request.PatronRequest;
 import org.springframework.data.domain.Pageable;

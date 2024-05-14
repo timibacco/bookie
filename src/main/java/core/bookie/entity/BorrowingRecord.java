@@ -1,4 +1,4 @@
-package core.entity;
+package core.bookie.entity;
 
 
 import lombok.*;
@@ -6,9 +6,11 @@ import lombok.*;
 import jakarta.persistence.*;
 
 
+import java.util.Collection;
 import java.util.Date;
 
 @Data
+@Entity
 @RequiredArgsConstructor
 @Table(name = "borrowing_record")
 public class BorrowingRecord {
@@ -19,11 +21,11 @@ public class BorrowingRecord {
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private Book book;
+    private Collection<Book> book;
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private Patron patron;
+    private Collection<Patron> patron;
 
     @Temporal(TemporalType.DATE)
     private Date borrowDate;

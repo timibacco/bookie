@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,8 +25,10 @@ import java.io.IOException;
 public class TokenFilter extends OncePerRequestFilter {
 
 
+    @Autowired
     private final TokenService tokenService;
 
+    @Autowired
     private final UserDetailsService userDetailsService;
 
 
@@ -84,7 +87,6 @@ public class TokenFilter extends OncePerRequestFilter {
     UsernameNotFoundException e){
         logger.error(e.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        System.out.println(e.getMessage());
 
     }
 }

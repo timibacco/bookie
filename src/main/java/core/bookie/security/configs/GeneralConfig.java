@@ -1,6 +1,6 @@
-package core.bookie.security;
+package core.bookie.security.configs;
 
-import core.repository.PatronRepository;
+import core.bookie.repository.PatronRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,13 +14,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@RequiredArgsConstructor
+
 @Configuration
+@RequiredArgsConstructor
 public class GeneralConfig {
 
 
     @Autowired
     private final PatronRepository repository;
+
 
     @Bean
     public UserDetailsService userDetailsService() {

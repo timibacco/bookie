@@ -22,18 +22,17 @@ import static core.bookie.utils.AntPattern.UNSECURED_ENDPOINTS;
 public class SecurityFilter {
 
 
+
     private final TokenFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final TokenService jwtService;
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers( UNSECURED_ENDPOINTS ).permitAll()
-                                .requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")
+                                .requestMatchers(ADMIN_ENDPOINTS).hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
 
                 )
