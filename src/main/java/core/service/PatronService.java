@@ -1,11 +1,12 @@
 package core.service;
 
+import core.bookie.request.PatronRequest;
 import org.springframework.data.domain.Pageable;
 
 public interface PatronService {
 
 
-    void createPatron(String name, String email, String phone);
+    void createPatron(PatronRequest request);
 
     void deletePatron(Long patronId);
 

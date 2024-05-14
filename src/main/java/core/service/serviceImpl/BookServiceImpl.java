@@ -40,6 +40,12 @@ public class BookServiceImpl implements BookService {
         return booksRepository.findAll();
     }
 
+
+    @Override
+    public Object getBook(Long bookID){
+        return booksRepository.findById(bookID);
+    }
+
     @Override
     public void deleteBook(Long bookId) {
 

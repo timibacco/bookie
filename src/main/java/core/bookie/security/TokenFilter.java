@@ -39,9 +39,9 @@ public class TokenFilter extends OncePerRequestFilter {
 
         final var header = request.getHeader("Authorization");
 
-        final String jwt;
+        final String token;
 
-        final String user_identification;
+        final String userId;
 
         try {
             if (header == null || header.startsWith("Bearer ")) {
@@ -49,9 +49,9 @@ public class TokenFilter extends OncePerRequestFilter {
                 return ;
             }
 
-            var token = header.substring(7); // get the set of strings after "Bearer" .......................................
+            token = header.substring(7); // get the set of strings after "Bearer" .......................................
 
-            var userId = tokenService.getUsername(token);
+            userId = tokenService.getUsername(token);
 
             if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
@@ -74,16 +74,16 @@ public class TokenFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+        // let's catch some errors and set some status.
         catch (
     ExpiredJwtException e){
         logger.error(e.getMessage());
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.getWriter().write("Expired JWT token!");
     }
         catch (
     UsernameNotFoundException e){
         logger.error(e.getMessage());
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         System.out.println(e.getMessage());
 
     }

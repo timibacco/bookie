@@ -1,5 +1,6 @@
 package core.service.serviceImpl;
 
+import core.bookie.request.PatronRequest;
 import core.entity.Patron;
 import core.repository.PatronRepository;
 import core.service.PatronService;
@@ -16,9 +17,9 @@ public class PatronServiceImpl implements PatronService {
 
 
     @Override
-    public void createPatron(String name, String email, String phone) {
+    public void createPatron(PatronRequest request) {
 
-         patronRepository.findByEmail(email).ifPresent(patron -> {
+         patronRepository.findByEmail(request.getEmail()).ifPresent(patron -> {
             throw new IllegalStateException("Patron with email already exists!");
 
         });
@@ -26,12 +27,13 @@ public class PatronServiceImpl implements PatronService {
 
         Patron patron = new Patron();
 
-        patron.setName(name);
+        patron.setName(request.getName());
 
-        patron.setEmail(email);
+        patron.setEmail(request.getEmail());
 
-        patron.setPhone(phone);
+        patron.setPhone(request.getPhone());
 
+        // todo: add password hashing
         patronRepository.saveAndFlush(patron);
 
 

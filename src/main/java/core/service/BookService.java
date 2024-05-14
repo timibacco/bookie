@@ -7,6 +7,8 @@ public interface BookService {
 
     Object addBook(BookRequest request);
 
+    Object getBook(Long bookID);
+
     Object getAllBooks();  // todo: make pageable
 
     void deleteBook(Long bookId);
