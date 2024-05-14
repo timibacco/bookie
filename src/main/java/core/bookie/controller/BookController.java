@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import core.bookie.request.BookRequest;
 import core.bookie.service.BookService;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -84,9 +83,10 @@ public class BookController {
      * Update a book
      * with bookId
      * Patch Mapping is used as opposed to Put Mapping in the assessment
+     *
      * This is because Put Mapping is used to update the entire resource,
      *
-     * thus setting the resource to null if the request body is empty.
+     * thus setting the resource to null if the field in the request body is empty.
      *
      * Not sure if that's the intent.
      *
@@ -98,6 +98,10 @@ public class BookController {
 
         return ResponseEntity.ok("Book updated successfully!");
     }
+
+
+
+
 
 
 
@@ -122,6 +126,10 @@ public class BookController {
 
 
 
+
+
+
+
     @Operation(summary = "Get all books", description = "Get all books in the library. It's a pageable request/response.",
             tags = {"books"},
 
@@ -131,7 +139,6 @@ public class BookController {
                     @ApiResponse(responseCode = "404", description = "Books not found"),
                     @ApiResponse(responseCode = "500", description = "Internal server error")
             })
-
     @GetMapping("/all")
     public ResponseEntity<?> getAll(@PageableDefault(size = 10) Pageable pageable) {
 
@@ -155,7 +162,6 @@ public class BookController {
                 @ApiResponse(responseCode = "404", description = "Book not found"),
                 @ApiResponse(responseCode = "500", description = "Internal server error")
         })
-
     @PostMapping("/borrow/{bookId}/patron/{patronId}")
     public ResponseEntity<?> borrowBook(@PathVariable Long bookId, @PathVariable Long patronId) {
 
@@ -179,7 +185,6 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Invalid or Bad Request")
 
     })
-
     @PatchMapping("return/{bookId}/patron/{patronId}")
     public ResponseEntity<?> returnBook(@PathVariable Long bookId, @PathVariable Long patronId) {
 
