@@ -4,6 +4,7 @@ package core.bookie.security.configs;
 import core.bookie.security.TokenFilter;
 import core.bookie.security.TokenService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +28,7 @@ import static core.bookie.utils.AntPattern.UNSECURED_ENDPOINTS;
 public class SecurityFilter {
 
 
-
+    @Autowired
     private final TokenFilter jwtAuthFilter;
 
 
@@ -37,7 +38,7 @@ public class SecurityFilter {
                 .csrf().disable()
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers( UNSECURED_ENDPOINTS ).permitAll()
-                                .requestMatchers(ADMIN_ENDPOINTS).hasAuthority("ADMIN")
+                                .requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")
 
 
                 )
