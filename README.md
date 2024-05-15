@@ -25,23 +25,38 @@ git clone https://github.com/timibacco/Bookie.git
 ```bash
 cd Bookie
 ```
+
 ```bash
 mvn clean install
 ```
 
+
+
 ### Running the Application
 
+
 #### Run the application with the following command:
+
 
 ```bash
 mvn spring-boot:run
 ```
 
+
 #### To create an admin user, run the application with the --create-admin argument:
+
+
 ```bash
 mvn spring-boot:run -Dspring-boot.run.arguments="--create-admin"
 ```
 
+
+# API Documentation
+#### The API documentation is available at http://localhost:8080/swagger-ui.html when the application is running.
+
+# Endpoints
+#### The application has several endpoints, some of which require the ADMIN role:  
+#### /api/admin/**: These endpoints are only accessible to users with the ADMIN role.
 
 
 
