@@ -4,7 +4,7 @@
       "name": "Jane Smith",
       "email": "jane.smith@example.com",
       "phone": "0987654321",
-      "password": "$2a$12$vhvd2xO/JhbNsgbuxm6bHuMnQZW1E85tHCUQ6mH59ZmEfc.u4Q4uW",
+      "password": "password2",
       "roles": [
         {
             "id": 1,
@@ -17,7 +17,7 @@
       "name": "David Johnson",
       "email": "david.johnson@example.com",
       "phone": "5551234567",
-      "password": "$2a$12$3czfwGW/GmtKNOVLfZh2juBu3GhGmtC4o17yZZ2CgZUGYIjP3A0Nq",
+      "password": "password3",
         "roles": [
         {
           "id": 2,
@@ -30,7 +30,7 @@
       "name": "Emily Brown",
       "email": "emily.brown@example.com",
       "phone": "7778889999",
-      "password": "$2a$12$vzHfDOkg65TjoW.OED5y..jgQBlqjTb4UXcbHtRKP2zIO2PSjiob6",
+      "password": "password4",
       "roles": [
         {
           "id": 1,
@@ -43,7 +43,7 @@
       "name": "Michael Wilson",
       "email": "michael.wilson@example.com",
       "phone": "1112223333",
-      "password": "$2a$12$8fyv60zgbwTH9YV.7IumSeCP8cz3ZjmlnvsyqZs0ZLZzH8famGnx6",
+      "password": "password5",
       "roles": [
         {
           "id": 1,
@@ -56,7 +56,7 @@
       "name": "Sarah Taylor",
       "email": "sarah.taylor@example.com",
       "phone": "9998887777",
-      "password": "$2a$12$pIyjI9O20LCG5iPYQaG7cOAGcVRt9D2oxBFMcjC1VdMwW/AVZBtvO",
+      "password": "password6",
       "roles": [
         {
           "id": 1,

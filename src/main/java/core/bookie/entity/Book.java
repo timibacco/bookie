@@ -1,5 +1,6 @@
 package core.bookie.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Generated;
 import jakarta.persistence.*;
@@ -37,17 +38,19 @@ public class Book {
     }
 
 
-    public String toString() {
-        return "Book{" +
-                "bookId=" + bookId +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", publicationDate=" + publicationDate +
-                ", ISBN='" + ISBN + '\'' +
-                ", edition=" + edition + "th"+ '\'' +
-                ", available=" + isAvailable() +
-                '}';
+    @JsonGetter("edition")
+    public String getEditionWithSuffix() {
+        String suffix = switch (edition) {
+            case 1 -> "st";
+            case 2 -> "nd";
+            case 3 -> "rd";
+            default -> "th";
+        };
+
+        return edition + suffix + " Edition";
     }
+
+
 
 
 

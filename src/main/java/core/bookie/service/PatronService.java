@@ -3,6 +3,8 @@ package core.bookie.service;
 import core.bookie.request.PatronRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Map;
+
 public interface PatronService {
 
 
@@ -12,6 +14,8 @@ public interface PatronService {
 
     Object getPatron(Long patronId);
 
-    Object getAllPatrons(Pageable pageable); //todo: make pageable
+    Object getAllPatrons(Pageable pageable);
+
+    Object updatePatron(Long patronId, Map<Object, Object> fields);
 
 }

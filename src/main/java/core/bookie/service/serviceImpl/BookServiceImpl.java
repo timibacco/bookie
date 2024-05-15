@@ -9,6 +9,7 @@ import core.bookie.entity.Book;
 import core.bookie.repository.BooksRepository;
 import core.bookie.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,20 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
+import core.bookie.utils.utils;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
+
+
+    private final utils utils;
 
     @Autowired
     private final BooksRepository booksRepository;
@@ -44,6 +52,7 @@ public class BookServiceImpl implements BookService {
         book.setISBN( (String) generateISBN());
         book.setPublicationDate(request.getPublicationDate());
         book.setEdition(request.getEdition());
+        book.setQuantity(request.getQuantity());
 
 
        return booksRepository.saveAndFlush(book);
@@ -73,9 +82,55 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(Long bookId, String title, String author, String ISBN) {
+    public Object updateBook(Long bookID, Map<Object, Object> fields){
 
+        var patronOptional = booksRepository.findById(bookID);
+
+        if(patronOptional.isEmpty()){
+            throw new IllegalStateException("Book with id " + bookID + " does not exist!");
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Book book = patronOptional.get();
+
+        fields.forEach((k, v) -> {
+            if (v != null) {
+                switch (k.toString()) {
+                    case "quantity":
+                        book.setQuantity((long) v);
+                        break;
+                    case "edition":
+                        book.setEdition((Integer) v);
+                        break;
+                    case "isbn":
+                        book.setISBN((String) v);
+                        break;
+                    case "publicationDate":
+                        try {
+                            book.setPublicationDate(dateFormat.parse( v.toString()));
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+                    case "author":
+                        book.setAuthor((String) v);
+                        break;
+                    case "title":
+                        book.setTitle((String) v);
+                        break;
+                }
+            }
+        });
+
+        return booksRepository.saveAndFlush(book);
     }
+
+
+
+
+
+
 
 
 

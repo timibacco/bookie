@@ -8,19 +8,24 @@ import core.bookie.repository.PatronRepository;
 import core.bookie.service.PatronService;
 import core.bookie.utils.RoleName;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import core.bookie.utils.utils;
 import java.util.Collections;
+import java.util.Map;
 
 
 @Service
 @RequiredArgsConstructor
 public class PatronServiceImpl implements PatronService {
+
+    private final utils utils;
+
 
     @Autowired
     private final PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -82,5 +87,38 @@ public class PatronServiceImpl implements PatronService {
     @Override
     public Object getAllPatrons(Pageable pageable) {
         return patronRepository.findAll(pageable);
+    }
+
+
+
+    @Override
+    public Object updatePatron(Long patronID, Map<Object, Object> fields){
+
+        var patronOptional = patronRepository.findById(patronID);
+
+        if(patronOptional.isEmpty()){
+            throw new IllegalStateException("Patron with id " + patronID + " does not exist!");
+        }
+
+        Patron patron = patronOptional.get();
+
+        fields.forEach((k, v) -> {
+            if (v != null) { // Check if the field value is not null
+                switch (k.toString()) {
+                    case "name":
+                        patron.setName((String) v);
+                        break;
+                    case "email":
+                        patron.setEmail((String) v);
+                        break;
+                    case "phone":
+                        patron.setPhone((String) v);
+                        break;
+                }
+
+            }
+        });
+
+        return patronRepository.saveAndFlush(patron);
     }
 }

@@ -1,5 +1,6 @@
 package core.bookie.security;
 
+import core.bookie.entity.Patron;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,7 +30,7 @@ public class TokenFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
     @Autowired
-    private final UserDetailsService userDetailsService;
+    private final CustomDetailService userDetailsService;
 
 
 
@@ -58,11 +59,12 @@ public class TokenFilter extends OncePerRequestFilter {
 
             if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
+                var userDetails = userDetailsService.loadUserByUsername(userId);
 
 
 
                 var isTokenValid = tokenService.isTokenValid(token, userDetails);
+
             if (tokenService.isTokenValid(token, userDetails) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
@@ -78,6 +80,7 @@ public class TokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
         // let's catch some errors and set some status.
+
         catch (
     ExpiredJwtException e){
         logger.error(e.getMessage());

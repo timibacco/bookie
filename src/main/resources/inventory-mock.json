@@ -1,0 +1,86 @@
+[
+  {
+    "recordId": 1,
+    "book": {
+      "bookId": 1,
+      "edition": 1
+
+    },
+    "patron": {
+      "patronId": 201,
+      "name": "Patron 1"
+    },
+    "borrowDate": "2022-01-01",
+    "returnDate": "2022-01-31",
+    "returned": false,
+    "toBeFined": false
+  },
+  {
+    "recordId": 2,
+    "book": {
+      "bookId": 102,
+      "title": "Book Title 2",
+      "author": "Author 2",
+      "edition": 2
+    },
+    "patron": {
+      "patronId": 202,
+      "name": "Patron 2"
+    },
+    "borrowDate": "2022-02-01",
+    "returnDate": "2022-02-28",
+    "returned": false,
+    "toBeFined": false
+  },
+  {
+    "recordId": 3,
+    "book": {
+      "bookId": 103,
+      "title": "Book Title 3",
+      "author": "Author 3",
+      "edition": 3
+    },
+    "patron": {
+      "patronId": 203,
+      "name": "Patron 3"
+    },
+    "borrowDate": "2022-03-01",
+    "returnDate": "2022-03-31",
+    "returned": false,
+    "toBeFined": false
+  },
+  {
+    "recordId": 4,
+    "book": {
+      "bookId": 104,
+      "title": "Book Title 4",
+      "author": "Author 4",
+      "edition": 4
+    },
+    "patron": {
+      "patronId": 204,
+      "name": "Patron 4"
+    },
+    "borrowDate": "2022-04-01",
+    "returnDate": "2022-04-30",
+    "returned": false,
+    "toBeFined": false
+  },
+  {
+    "recordId": 5,
+    "book": {
+      "bookId": 105,
+      "title": "Book Title 5",
+      "author": "Author 5",
+      "edition": 5
+    },
+    "patron": {
+      "patronId": 205,
+      "name": "Patron 5"
+    },
+    "borrowDate": "2022-05-01",
+    "returnDate": "2022-05-31",
+    "returned": false,
+    "toBeFined": false
+  }
+]

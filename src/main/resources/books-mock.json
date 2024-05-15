@@ -1,0 +1,48 @@
+[
+    {
+      "bookId": 1,
+      "title": "Book Title 1",
+      "author": "Author 1",
+      "publicationDate": "2022-01-01",
+      "isbn": "123-456-789",
+      "edition": 1,
+      "quantity": 10
+    },
+    {
+      "bookId": 2,
+      "title": "Book Title 2",
+      "author": "Author 2",
+      "publicationDate": "2022-02-02",
+      "isbn": "234-567-890",
+      "edition": 2,
+      "quantity": 20
+    },
+    {
+      "bookId": 3,
+      "title": "Book Title 3",
+      "author": "Author 3",
+      "publicationDate": "2022-03-03",
+      "isbn": "345-678-901",
+      "edition": 3,
+      "quantity": 30
+    },
+    {
+      "bookId": 4,
+      "title": "Book Title 4",
+      "author": "Author 4",
+      "publicationDate": "2022-04-04",
+      "isbn": "456-789-012",
+      "edition": 4,
+      "quantity": 40
+    },
+    {
+      "bookId": 5,
+      "title": "Book Title 5",
+      "author": "Author 5",
+      "publicationDate": "2022-05-05",
+      "isbn": "567-890-123",
+      "edition": 5,
+      "quantity": 50
+    }
+
+  ]

@@ -2,6 +2,8 @@ package core.bookie.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.bookie.entity.Book;
+import core.bookie.entity.BorrowingRecord;
 import core.bookie.entity.Patron;
 import core.bookie.entity.Role;
 import core.bookie.repository.BooksRepository;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -37,8 +40,11 @@ public class MockPopulator {
     @Autowired
     private RoleRepository roleRepository;
 
+    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @Autowired
     private  InventoryRepository inventoryRepository;
+
 
     @PostConstruct
     public void populate() throws IOException {
@@ -56,13 +62,32 @@ public class MockPopulator {
         try(
         BufferedInputStream resource0 = (BufferedInputStream) new ClassPathResource("patrons-mock.json").getInputStream()){
 
-        List<Patron> patrons = objectMapper.readValue(resource0, patronType);
+            BufferedInputStream resource1 = (BufferedInputStream) new ClassPathResource("books-mock.json").getInputStream();
 
+            BufferedInputStream resource2 = (BufferedInputStream) new ClassPathResource("inventory-mock.json").getInputStream();
+
+            List<Patron> patrons = objectMapper.readValue(resource0, patronType);
+                List<Book> books = objectMapper.readValue(resource1, new TypeReference<>() {
+                });
+                List<BorrowingRecord> inventory = objectMapper.readValue(resource2, new TypeReference<>() {
+                });
+
+
+        for(Patron patron: patrons){
+            patron.setPassword(encoder.encode(patron.getPassword()));
             log.info("\n-----> Populating mock data for patron entity <------\n");
-
+        }
             patronRepository.saveAllAndFlush(patrons);
 
             log.info("\n-----> Mock data for patron entity populated successfully <------\n");
+
+            booksRepository.saveAllAndFlush(books);
+
+            log.info("\n-----> Mock data for books entity populated successfully <------\n");
+
+            inventoryRepository.saveAllAndFlush(inventory);
+
+            log.info("\n-----> Mock data for borrowingRecord entity populated successfully <------\n");
 
 
         }catch(IOException e){

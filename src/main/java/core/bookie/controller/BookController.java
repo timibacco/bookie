@@ -12,7 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/books")
@@ -31,7 +34,7 @@ public class BookController {
                     @ApiResponse(responseCode = "500", description = "Internal server error")
             })
     @GetMapping("/{bookID}")
-    public ResponseEntity<?> getBook(@PathVariable Long bookID) {
+    public ResponseEntity<?> getBook(@PathVariable("bookID") Long bookID) {
 
 
         var response = bookService.getBook(bookID);
@@ -93,11 +96,13 @@ public class BookController {
      *
      */
     @PatchMapping("/{bookId}")
-    public ResponseEntity<?> updateBook(@PathVariable Long bookId, @RequestBody BookRequest request) {
+    public ResponseEntity<?> updateBook(@PathVariable("bookId") Long bookId, @RequestBody Map<Object, Object> request) {
 
-//        bookService.updateBook(bookId, request.getTitle(), request.getAuthor(), request.getISBN());
 
-        return ResponseEntity.ok("Book updated successfully!");
+        var response = bookService.updateBook(bookId, request);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
 
@@ -196,8 +201,15 @@ public class BookController {
     }
 
 
+@Operation(summary = "Get all books in inventory", description = "Get all books in the library inventory. It's a pageable request/response.",
+        tags = {"books"},
+        responses = {
+                @ApiResponse(responseCode = "200", description = "Books in inventory retrieved successfully"),
+                @ApiResponse(responseCode = "404", description = "Books in inventory not found"),
+                @ApiResponse(responseCode = "500", description = "Internal server error")
+        })
     @GetMapping("/inventory")
-    public ResponseEntity<?> getInventory(@PageableDefault(sort = { "IsOverdue"})
+    public ResponseEntity<?> getInventory(@PageableDefault(size = 10)
                                               Pageable pageable){
 
         return new ResponseEntity<>(bookService.queryInventory(pageable), HttpStatus.OK);

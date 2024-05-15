@@ -4,6 +4,8 @@ package core.bookie.service;
 import core.bookie.request.BookRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Map;
+
 public interface BookService {
 
     Object addBook(BookRequest request);
@@ -14,7 +16,7 @@ public interface BookService {
 
     void deleteBook(Long bookId);
 
-    void updateBook(Long bookId, String title, String author, String ISBN);
+    Object updateBook(Long bookID, Map<Object, Object> fields);
 
 
     void returnBook(Long bookId, Long patronId);

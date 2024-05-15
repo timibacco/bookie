@@ -18,5 +18,7 @@ public class BookRequest {
 
     private Integer edition;
 
+    private long quantity;
+
 
 }
