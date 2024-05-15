@@ -17,10 +17,31 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/timibacco/Bookie.git
-'''
+
+```
 
 
-The app can be run with the maven wrapper.
 
-'''bash
-spring-boot:run -Dspring-boot.run.arguments=--create-admin
+```bash
+cd Bookie
+```
+```bash
+mvn clean install
+```
+
+### Running the Application
+
+#### Run the application with the following command:
+
+```bash
+mvn spring-boot:run
+```
+
+#### To create an admin user, run the application with the --create-admin argument:
+```bash
+mvn spring-boot:run -Dspring-boot.run.arguments="--create-admin"
+```
+
+
+
+
