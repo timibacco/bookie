@@ -1,11 +1,14 @@
 package core.bookie.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import jakarta.persistence.*;
 
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
 
@@ -20,12 +23,12 @@ public class BorrowingRecord {
     private Long recordId;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Collection<Book> book;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Book book;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Collection<Patron> patron;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Patron patron;
 
     @Temporal(TemporalType.DATE)
     private Date borrowDate;
@@ -36,7 +39,15 @@ public class BorrowingRecord {
 
     private boolean returned;
 
-    private boolean overdue;
+
+    private boolean toBeFined;
+
+
+
+    @JsonProperty("IsOverdue")
+    public boolean isOverdue() {
+        return Instant.now().isAfter(Instant.ofEpochMilli(returnDate.getTime()));
+    }
 
 
 

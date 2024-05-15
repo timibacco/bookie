@@ -31,7 +31,7 @@ public class Book {
 
     private long quantity;
 
-    @JsonProperty(value = "is_available")
+    @JsonProperty(value = "IsAvailable")
     public boolean isAvailable(){
         return quantity > 1;
     }

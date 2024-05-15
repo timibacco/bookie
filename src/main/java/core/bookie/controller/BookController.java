@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -142,7 +143,7 @@ public class BookController {
     @GetMapping("/all")
     public ResponseEntity<?> getAll(@PageableDefault(size = 10) Pageable pageable) {
 
-        var response = bookService.getAllBooks();
+        var response = bookService.getAllBooks(pageable);
 
         return ResponseEntity.ok(response);
 
@@ -191,6 +192,15 @@ public class BookController {
         bookService.returnBook(bookId, patronId);
 
         return ResponseEntity.ok("Book returned successfully!");
+
+    }
+
+
+    @GetMapping("/inventory")
+    public ResponseEntity<?> getInventory(@PageableDefault(sort = { "IsOverdue"})
+                                              Pageable pageable){
+
+        return new ResponseEntity<>(bookService.queryInventory(pageable), HttpStatus.OK);
 
     }
 }

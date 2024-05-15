@@ -2,6 +2,7 @@ package core.bookie.service;
 
 
 import core.bookie.request.BookRequest;
+import org.springframework.data.domain.Pageable;
 
 public interface BookService {
 
@@ -9,17 +10,18 @@ public interface BookService {
 
     Object getBook(Long bookID);
 
-    Object getAllBooks();  // todo: make pageable
+    Object getAllBooks(Pageable pageable);
 
     void deleteBook(Long bookId);
 
     void updateBook(Long bookId, String title, String author, String ISBN);
 
-    void checkoutBook(Long bookId, Long patronId);
 
     void returnBook(Long bookId, Long patronId);
 
     void borrowBook(Long bookId, Long patronId);
+
+    Object queryInventory(Pageable pageable);
 
 
 

@@ -8,7 +8,8 @@ public class AntPattern {
             "/api/patrons/**",
 
             "/swagger-ui/**",
-            "/v3/**"
+            "/v3/**",
+            "/actuator/**",
 
     };
 
