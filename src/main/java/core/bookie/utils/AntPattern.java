@@ -13,6 +13,8 @@ public class AntPattern {
             "/swagger-ui/**",
             "/v3/**",
 
+            "/actuator/**",
+
 
 
     };
@@ -21,9 +23,8 @@ public class AntPattern {
 
 
             "/api/admin/**",
-            "/api/books/inventory",
 
-            "/actuator/**",
+
 
     };
 

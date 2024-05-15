@@ -2,7 +2,7 @@ package core.bookie.security.configs;
 
 
 import core.bookie.security.TokenFilter;
-import core.bookie.security.TokenService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

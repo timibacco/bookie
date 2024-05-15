@@ -7,12 +7,16 @@ import core.bookie.repository.PatronRepository;
 import core.bookie.request.BookRequest;
 import core.bookie.entity.Book;
 import core.bookie.repository.BooksRepository;
+import core.bookie.security.TokenService;
 import core.bookie.service.BookService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -40,6 +44,8 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private final InventoryRepository inventoryRepository;
+
+    private final TokenService jwtutils;
 
 
     @Override
@@ -221,11 +227,40 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Object queryInventory(Pageable pageable){
-        return inventoryRepository.findAll(pageable);
+    public Object queryInventory(Pageable pageable, HttpServletRequest request){
+        final var header = request.getHeader("Authorization");
+
+
+        if (header == null){
+
+            return  ResponseEntity.status(HttpStatus.FORBIDDEN).body("No Authorization parameter in header");
+
+        }
+
+        var token = header.substring(7);
+
+        var email = jwtutils.getUsername(token);
+
+        var user = patronsRepository.findByEmail(email);
+
+        if (user.isEmpty()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User Does not Exist" );
+        }
+
+        var auth = user.get().getAuthorities();
+
+        if(auth.contains(new SimpleGrantedAuthority("ADMIN"))){
+
+            return ResponseEntity.status(HttpStatus.OK).body(inventoryRepository.findAll(pageable));
+
+        }
+
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null) ;
+
     }
 
     private Object generateISBN(){
-        return new BigInteger(12, new SecureRandom()).toString(10);
+        return new BigInteger(24, new SecureRandom()).toString(10);
     }
 }

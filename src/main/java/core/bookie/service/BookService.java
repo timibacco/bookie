@@ -2,6 +2,7 @@ package core.bookie.service;
 
 
 import core.bookie.request.BookRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Map;
@@ -23,7 +24,7 @@ public interface BookService {
 
     void borrowBook(Long bookId, Long patronId);
 
-    Object queryInventory(Pageable pageable);
+    Object queryInventory(Pageable pageable, HttpServletRequest request);
 
 
 
