@@ -58,7 +58,13 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--create-admin"
 # Endpoints
 
  The application has several endpoints, some of which require the ADMIN role:  
- /api/admin/**: These endpoints are only accessible to users with the ADMIN role.
+
+#### /api/admin/**: 
+
+#### /api/books/inventory
+
+
+These endpoints are only accessible to users with the ADMIN role.
 
 
 # Contributing
