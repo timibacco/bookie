@@ -10,6 +10,8 @@ import core.bookie.repository.BooksRepository;
 import core.bookie.repository.InventoryRepository;
 import core.bookie.repository.PatronRepository;
 import core.bookie.repository.RoleRepository;
+import core.bookie.request.PatronRequest;
+import core.bookie.service.serviceImpl.AuthService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,14 +23,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.swing.*;
 import java.io.BufferedInputStream;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
 import java.util.List;
+import java.util.Scanner;
 
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class MockPopulator {
 
     @Autowired
@@ -44,6 +50,13 @@ public class MockPopulator {
 
     @Autowired
     private  InventoryRepository inventoryRepository;
+
+    private static final String CREATE_SUPERUSER_CMD = "--create-admin";
+
+
+    @Autowired
+    private  final AuthService authservice;
+
 
 
     @PostConstruct
@@ -97,4 +110,41 @@ public class MockPopulator {
 
     }
 
-}
+    public void createAdminOnCLI(String[] args) {
+
+        if (args.length > 0 && args[0].equals(CREATE_SUPERUSER_CMD)) {
+            log.info("Creating superuser...");
+
+
+            String password;
+            String email = "";
+            Console console = System.console();
+            if (console == null) {
+            Scanner scanner = new Scanner(System.in);
+            log.info("\n\t\tEnter superuser email: \t\t\n");
+             email = scanner.nextLine();
+
+              log.info("\n\t\tEnter superuser password: \t\t\n");
+               password = scanner.nextLine();
+
+               scanner.close();
+            } else {
+                password = String.valueOf(console.readPassword("Enter password: "));
+            }
+
+
+            PatronRequest in = new PatronRequest();
+            in.setEmail(email);
+            in.setPassword(password);
+
+            authservice.createPatronByAdmin(in);
+
+            log.info("\n\t\t------> Superuser created successfully! <------\n");
+        }
+    }
+
+
+
+    }
+
+

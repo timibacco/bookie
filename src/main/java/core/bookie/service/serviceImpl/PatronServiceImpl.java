@@ -24,19 +24,25 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PatronServiceImpl implements PatronService {
 
-    private final utils utils;
+
+    @Autowired
+    private  utils utils;
 
 
     @Autowired
-    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
+    private  final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
-    private final PatronRepository patronRepository;
+    private  PatronRepository patronRepository;
 
     @Autowired
     private RoleRepository roleRepository;
 
     private static final String MY_ROLE = "USER";
+
+
+
+
     @Override
     public void createPatron(PatronRequest request) {
 
@@ -103,7 +109,7 @@ public class PatronServiceImpl implements PatronService {
         Patron patron = patronOptional.get();
 
         fields.forEach((k, v) -> {
-            if (v != null) { // Check if the field value is not null
+            if (v != null) {
                 switch (k.toString()) {
                     case "name":
                         patron.setName((String) v);

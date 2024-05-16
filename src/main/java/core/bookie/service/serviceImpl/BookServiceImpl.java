@@ -10,6 +10,7 @@ import core.bookie.repository.BooksRepository;
 import core.bookie.security.TokenService;
 import core.bookie.service.BookService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.util.Objects;
 import core.bookie.utils.utils;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 

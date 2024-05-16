@@ -96,7 +96,12 @@ public class AuthService {
 
             Role role = roleRepository.findByRoleName(RoleName.valueOf(MY_ROLE));
 
-            patron.setRoles(Collections.singletonList(role));
+
+
+
+        patron.setRoles(Collections.singletonList(role));
+
+            roleRepository.save(role);
 
             patronRepository.save(patron);
 

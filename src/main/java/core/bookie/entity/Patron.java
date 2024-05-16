@@ -32,7 +32,7 @@ public class Patron implements UserDetails {
 
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     List <Role> roles;
 
 

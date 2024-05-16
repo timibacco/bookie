@@ -202,11 +202,14 @@ public class BookController {
     }
 
 
-@Operation(summary = "Get all books in inventory", description = "Get all books in the library inventory. It's a pageable request/response.",
+@Operation(summary = "Get all books in inventory.", description = "Get all books in the library inventory." +
+        " It's a pageable request/response. ONLY ADMINS CAN ACCESS .",
         tags = {"books"},
         responses = {
                 @ApiResponse(responseCode = "200", description = "Books in inventory retrieved successfully"),
                 @ApiResponse(responseCode = "404", description = "Books in inventory not found"),
+                @ApiResponse(responseCode = "403", description = "Forbidden. No jwt in header"),
+                @ApiResponse(responseCode = "401", description = "Unauthorized access. Only admin access"),
                 @ApiResponse(responseCode = "500", description = "Internal server error")
         })
     @GetMapping("/inventory")
