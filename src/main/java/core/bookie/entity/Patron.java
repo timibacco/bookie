@@ -8,15 +8,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
 @RequiredArgsConstructor
 @Table(name ="patrons")
-public class Patron implements UserDetails {
+public class Patron implements UserDetails , Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +44,8 @@ public class Patron implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        this.roles.forEach(role -> authorities.add(new
-            SimpleGrantedAuthority(role.getRoleName())));
+        return roles;
 
-    return authorities;
     }
 
     @Override

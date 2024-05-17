@@ -12,8 +12,11 @@ import core.bookie.service.BookService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,17 +69,23 @@ public class BookServiceImpl implements BookService {
        return booksRepository.saveAndFlush(book);
     }
 
+
+    @Cacheable(value = "books")
     @Override
     public Object getAllBooks(Pageable pageable) {
         return booksRepository.findAll(pageable);
     }
 
 
+
+    @Cacheable(value = "books", key = "#bookID")
     @Override
     public Object getBook(Long bookID){
         return booksRepository.findById(bookID);
     }
 
+
+    @Cacheable(value = "books", key = "#bookId")
     @Override
     public void deleteBook(Long bookId) {
 
@@ -228,6 +237,7 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    @Cacheable(value = "inventory")
     @Override
     public Object queryInventory(Pageable pageable, HttpServletRequest request){
         final var header = request.getHeader("Authorization");
@@ -255,10 +265,11 @@ public class BookServiceImpl implements BookService {
 
             return ResponseEntity.status(HttpStatus.OK).body(inventoryRepository.findAll(pageable));
 
+        } else {
+
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null) ;
 
     }
 

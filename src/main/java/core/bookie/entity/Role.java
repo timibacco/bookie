@@ -4,6 +4,7 @@ package core.bookie.entity;
 import core.bookie.utils.RoleName;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
 
@@ -11,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,9 @@ public class Role implements Serializable {
 
     public Role (RoleName roleName) {this.roleName = roleName;}
 
-    public String getRoleName() {
+
+    @Override
+    public String getAuthority() {
 
         return roleName.toString();
 

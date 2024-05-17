@@ -35,18 +35,19 @@ public class SecurityFilter {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .csrf().disable()
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers( UNSECURED_ENDPOINTS ).permitAll()
-                                .requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")
+                        auth -> auth.requestMatchers(ADMIN_ENDPOINTS).hasAuthority("ADMIN")
+                                .requestMatchers( UNSECURED_ENDPOINTS ).permitAll()
 
 
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 
 
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
