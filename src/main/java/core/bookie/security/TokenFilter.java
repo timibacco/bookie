@@ -1,6 +1,5 @@
 package core.bookie.security;
 
-import core.bookie.entity.Patron;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -85,11 +82,14 @@ public class TokenFilter extends OncePerRequestFilter {
     ExpiredJwtException e){
         logger.error(e.getMessage());
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        System.out.println("Token has expired");
+        response.getWriter().write("Token has expired");
     }
         catch (
     UsernameNotFoundException e){
         logger.error(e.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("User not found");
 
     }
 }
