@@ -19,6 +19,21 @@ Clone the repository:
 git clone https://github.com/timibacco/Bookie.git
 
 ```
+#### Install redis server
+
+```bash
+sudo apt install redis-server
+```
+#### Start the server
+
+```bash
+sudo systemctl start redis-server.service
+```
+
+```bash
+redis-server
+```
+#### Your redis server is now running on  port 6379 as configured in the application.properties.
 
 
 
